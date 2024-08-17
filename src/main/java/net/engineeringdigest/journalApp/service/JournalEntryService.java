@@ -16,8 +16,8 @@ public class JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
 
-    public void saveEntry(JournalEntry entry) {
-        journalEntryRepository.save(entry);  // Use 'entry' here instead of 'journalEntry'
+    public void saveEntry(JournalEntry myEntry) {
+        journalEntryRepository.save(myEntry, userName);  // Use 'entry' here instead of 'journalEntry'
     }
 
 
