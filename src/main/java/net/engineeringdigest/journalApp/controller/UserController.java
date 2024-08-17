@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String UserName) {
       userInDb=userService.findByUserName(user.getUserName());
       if(userInDb!=null){
           userInDb.setUser(user.getUserName());
