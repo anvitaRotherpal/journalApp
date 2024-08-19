@@ -57,19 +57,23 @@ public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId m
       if(journalEntry.isPresent(){
           return new ResponseEntity<>( myEntry,HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(erfrer), HttpsStatus.OK);
+    
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 }
 
-    @DeleteMapping("id/{myId}")
-    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId){
-        journalEntryService.deleteById(myId);
+    @DeleteMapping("id/{username}/{myId}")
+    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId, @PathVariable String userName){
+        journalEntryService.deleteById(myId,userName);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/id/{id}")
-    public ResponseEntity<Object> updateJournalEntryById(@PathVariable ObjectId id, @RequestBody JournalEntry newEntry){
+    @PutMapping("/id/{userName}/{myId}")
+    public ResponseEntity<Object> updateJournalEntryById(
+            @PathVariable ObjectId id;
+            @RequestBody JournalEntry newEntry;
+            @PathVariable String  userName;
+    ){
 
         JournalEntry old = journalEntryService.findById(id).orElse(null);
 
