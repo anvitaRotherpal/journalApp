@@ -12,6 +12,22 @@ public class JournalApplication {
     public static void main(String[] args) {
         SpringApplication.run(JournalApplication.class, args);
     }
+   SpringApplication.run()
+
+    public void main() {
+
+
+    }
+
+    public int add(int i){
+        return i;
+    }
+
+
+
 
 
 }
+
+
+
