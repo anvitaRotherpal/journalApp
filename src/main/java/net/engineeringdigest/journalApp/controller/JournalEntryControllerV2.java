@@ -35,12 +35,12 @@ public ResponseEntity<?> getAllJournalEntriesofUser(@PathVariable String userNam
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 }
 
-@PostMapping
-   public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry) {
+@PostMapping("userName")
+   public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry, @PathVariable String userName) {
 
     try {
-        myEntry.setDate(LocalDateTime.now());
-        journalEntryService.saveEntry(myEntry);
+
+        journalEntryService.saveEntry(myEntry, userName);
         return new ResponseEntity<>(myEntry, HttpStatus.CREATED);
     }catch(Exception e){
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
