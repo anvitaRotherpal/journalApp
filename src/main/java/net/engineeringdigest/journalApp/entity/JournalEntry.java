@@ -8,7 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Document(collection="journal_entries")
-
+@Data
+@NoArgsConstructor
 public class JournalEntry {
 
     @Id
