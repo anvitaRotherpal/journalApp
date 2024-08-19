@@ -19,6 +19,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public void saveEntry(User user) {
         journalEntry.setDate(LocalDateTime.now());
         userRepository.save(user);  // Use 'entry' here instead of 'journalEntry'
