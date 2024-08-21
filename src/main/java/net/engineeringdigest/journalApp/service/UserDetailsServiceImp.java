@@ -1,4 +1,11 @@
 package net.engineeringdigest.journalApp.service;
 
-public class UserDetailsServiceImp {
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+
+public class UserDetailsServiceImp implements UserDetailsServiceAutoConfiguration {
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+        return null;
+    }
 }
