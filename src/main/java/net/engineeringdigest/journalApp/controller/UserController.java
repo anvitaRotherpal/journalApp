@@ -21,18 +21,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        userService.getAll();
-    }
-
-    @PostMapping
-    public void createUser(@RequestBody User user) {
-        userService.saveEntry(user);
-    }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String UserName) {
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        Authentication authentication=SecurityContextHolder.getContext.getAuthentication();
+        String userName=authentication.getName();
+        User userInDb=userService.findByUserName(userName);
       userInDb=userService.findByUserName(user.getUserName());
       if(userInDb!=null){
           userInDb.setUser(user.getUserName());
