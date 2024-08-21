@@ -27,8 +27,9 @@ public class JournalEntryService {
         try {
             User user = userService.findByUserName(userName);
             journalEntry.setDate(LocalDateTime.now());
-            JournalEntry saved = journalEntry.save(journalEntry);
-            user.getJournalEntries().add(saved);// Use 'entry' here instead of 'journalEntry'
+            JournalEntry saved = journalEntryRepository.save(journalEntry);
+            user.getJournalEntries().add(saved);
+            userService.saveEntry(user);// Use 'entry' here instead of 'journalEntry'
         }catch(Exception e){
             System.out.println(e);
             throw new RuntimeException("An error occures while saving the entry", e);
