@@ -4,6 +4,7 @@ package net.engineeringdigest.journalApp.controller;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
 import net.engineeringdigest.journalApp.service.UserService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,12 +33,21 @@ public class UserController {
           userInDb.setUser(user.getUserName());
           userInDb.setPassword(user.getPassword());
           userService.saveEntry(userInDb);
-      }
+
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+      @DeleteMapping("/user")
+              public ResponseEntity<?> deleteUserById() {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
 
-}
+      }
+
+
+
+
 
 
 
