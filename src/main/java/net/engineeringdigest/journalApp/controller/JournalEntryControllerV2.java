@@ -2,8 +2,10 @@ package net.engineeringdigest.journalApp.controller;
 
 
 import net.engineeringdigest.journalApp.entity.JournalEntry;
+import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
 import net.engineeringdigest.journalApp.service.UserService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,10 +54,13 @@ public ResponseEntity<?> getAllJournalEntriesofUser(@PathVariable String userNam
 
 
 @GetMapping("id/{myId}")
-public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId){
-      Optional<JournalEntry> journalEntry= journalEntryService.findById(myId);
-      if(journalEntry.isPresent(){
-          return new ResponseEntity<>( myEntry,HttpStatus.NOT_FOUND);
+public ResponseEntity<JournalEntry> getJournalEntryById(){
+        Authentication authentication=SecurityContextHolder.getContext.getAuthentication();
+        String username=authentication.getName();
+        User user=userService.findByUserName(userName);
+      List<JournalEntry> journalEntry= journalEntryService.findById(myId);
+      if(all!=null && !all.isEmpty()){
+          return new ResponseEntity<>(all,HttpStatus.OK);
     }
     
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -75,7 +80,7 @@ public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId m
             @PathVariable String  userName;
     ){
 
-        JournalEntry old = journalEntryService.findById(id).orElse(null);
+        JournalEntry old = journalEntryService.findById(myId).orElse(null);
 
         if(old!=null){
             old.setTitle(newEntry.getTitle()!=null && newEntry.getTitle().equals("")? newEntry.getEntry.getTitle() : old.getTitle());
