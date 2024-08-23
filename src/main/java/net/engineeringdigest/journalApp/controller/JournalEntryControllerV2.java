@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
@@ -29,7 +30,9 @@ public class JournalEntryControllerV2 {
     private UserService userService;
 
     @GetMapping("userName")
-public ResponseEntity<?> getAllJournalEntriesofUser(@PathVariable String userName){
+public ResponseEntity<?> getAllJournalEntriesofUser(){
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        String userName=userService.findByUserName(userName);
         User user=userService.findByUserName(userName);
         if(all!=null && !all.isEmpty()){
             return new ResponseEntity<>(all, HttpStatus.OK);
@@ -38,9 +41,11 @@ public ResponseEntity<?> getAllJournalEntriesofUser(@PathVariable String userNam
 }
 
 @PostMapping("userName")
-   public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry, @PathVariable String userName) {
+   public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry) {
 
     try {
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        String userName=userService.findByUserName(userName);
 
         journalEntryService.saveEntry(myEntry, userName);
         return new ResponseEntity<>(myEntry, HttpStatus.CREATED);
@@ -54,10 +59,14 @@ public ResponseEntity<?> getAllJournalEntriesofUser(@PathVariable String userNam
 
 
 @GetMapping("id/{myId}")
-public ResponseEntity<JournalEntry> getJournalEntryById(){
+public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable ObjectId myId){
         Authentication authentication=SecurityContextHolder.getContext.getAuthentication();
         String username=authentication.getName();
         User user=userService.findByUserName(userName);
+        List<JournalEntry> collect=users.getJournalEntries().stream().filter(x -> x.getId().equals(myId).collect(Collectors.toList()));
+        if(!collect.isEmpty()){
+            collect.get(0).getId();
+        }
       List<JournalEntry> journalEntry= journalEntryService.findById(myId);
       if(all!=null && !all.isEmpty()){
           return new ResponseEntity<>(all,HttpStatus.OK);
