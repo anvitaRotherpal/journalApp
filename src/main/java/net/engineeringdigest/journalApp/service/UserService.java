@@ -1,15 +1,13 @@
 package net.engineeringdigest.journalApp.service;
 
-import net.engineeringdigest.journalApp.Repositories.JournalEntryRepository;
 import net.engineeringdigest.journalApp.Repositories.UserRepository;
-import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +21,9 @@ public class UserService {
     private static final PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
     @Transactional
-    public void saveEntry(User user) {
-        journalEntry.setDate(LocalDateTime.now());
+    public void saveNewUser(User user) {
+         user.setPassword(passwordEncoder.encode(user.getPassword()));
+         user.setRoles(Arrays.asList("USER"));
         userRepository.save(user);  // Use 'entry' here instead of 'journalEntry'
     }
 
