@@ -2,6 +2,7 @@ package net.engineeringdigest.journalApp.service;
 
 import net.engineeringdigest.journalApp.Repositories.JournalEntryRepository;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
+import net.engineeringdigest.journalApp.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ public class JournalEntryService {
             journalEntry.setDate(LocalDateTime.now());
             JournalEntry saved = journalEntryRepository.save(journalEntry);
             user.getJournalEntries().add(saved);
-            userService.saveEntry(user);// Use 'entry' here instead of 'journalEntry'
+            userService.saveUser(user);// Use 'entry' here instead of 'journalEntry'
         }catch(Exception e){
             System.out.println(e);
             throw new RuntimeException("An error occures while saving the entry", e);
@@ -38,7 +39,7 @@ public class JournalEntryService {
 
     public void saveEntry(JournalEntry journalEntry) {
 
-         userService.saveEntry(journalEntry);
+         userService.saveNewUser(journalEntry);
     }
 
 
@@ -51,9 +52,18 @@ public class JournalEntryService {
     }
 
     public void deleteById(ObjectId id) {
+        try{
         User user=userService.findUserName(userName);
-        user.getJournalEntries().remove(x-> x.getId().equals(id));
-        userService.saveEntry(user);
-        journalEntryRepository.deleteById(id);
+        boolean removed=user.getJournalEntries().remove(x-> x.getId().equals(id));
+        if(removed) {
+            userService.saveUser(user);
+            journalEntryRepository.deleteById(id);
+        }
+        catch(Exception e){
+            System.out.println(e);
+            throw new RuntimeException("An error occures while removing the entry");
+            }
+
+
     }
 }
