@@ -27,7 +27,7 @@ public class UserService {
         userRepository.save(user);  // Use 'entry' here instead of 'journalEntry'
     }
 
-    public void saveNewUser(User user) {
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 
