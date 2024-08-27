@@ -2,9 +2,11 @@ package net.engineeringdigest.journalApp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @EnableWebSecurity
+@Profile("dev")
 public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
