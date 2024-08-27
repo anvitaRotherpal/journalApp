@@ -3,6 +3,7 @@ package net.engineeringdigest.journalApp.service;
 import net.engineeringdigest.journalApp.Repositories.UserRepository;
 import net.engineeringdigest.journalApp.entity.User;
 import org.bson.types.ObjectId;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ public class UserService {
     private UserRepository userRepository;
 
     private static final PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+
+    private static final logger=LoggerFactory.getLogger(UserService.class);
 
     @Transactional
     public void saveNewUser(User user) {
