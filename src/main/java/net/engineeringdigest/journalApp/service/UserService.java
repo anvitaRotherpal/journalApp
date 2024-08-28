@@ -25,9 +25,15 @@ public class UserService {
 
     @Transactional
     public void saveNewUser(User user) {
+        try{
          user.setPassword(passwordEncoder.encode(user.getPassword()));
          user.setRoles(Arrays.asList("USER"));
-        userRepository.save(user);  // Use 'entry' here instead of 'journalEntry'
+        userRepository.save(user);
+        return true;// Use 'entry' here instead of 'journalEntry'
+    } catch(Exception e){
+        logger.error("Error Occures", e);
+        return false;
+        }
     }
 
     public void saveUser(User user) {
