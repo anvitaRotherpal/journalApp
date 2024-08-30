@@ -51,7 +51,8 @@ public class JournalEntryService {
         return journalEntryRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id) {
+    public boolean deleteById(ObjectId id) {
+       boolean removed=false;
         try{
         User user=userService.findUserName(userName);
         boolean removed=user.getJournalEntries().remove(x-> x.getId().equals(id));
@@ -59,11 +60,12 @@ public class JournalEntryService {
             userService.saveUser(user);
             journalEntryRepository.deleteById(id);
         }
+
         catch(Exception e){
-            System.out.println(e);
+            log.error("Error",e);
             throw new RuntimeException("An error occures while removing the entry");
             }
-
+            return removed;
 
     }
 }
