@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.service;
 
+import net.engineeringdigest.journalApp.api.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ public class weatherService {
 
      public String getWeather(String city){
          String finalAPI=API.replace("CITY",city).replace("API_KEY",apiKey);
-         restTemplate.exchange(finalAPI, HttpMethod.GET, null,WeatherResponse.class)
+         restTemplate.exchange(finalAPI, HttpMethod.GET, null,WeatherResponse.class);
+         WeatherResponse body=response.getBody();
      }
 }
