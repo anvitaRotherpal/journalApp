@@ -1,6 +1,8 @@
 package net.engineeringdigest.journalApp.controller;
 
 
+import net.engineeringdigest.journalApp.api.WeatherResponse;
+import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private WeatherService weatherService;
 
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -41,7 +45,13 @@ public class UserController {
         public ResponseEntity<?> greeting() {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             userRepository.deleteByUserName(authentication.getName());
-            return new ResponseEntity<>("Hi"+authentication.getName(), HttpStatus.OK);
+            WeatherResponse mumbai=weatherService.getWeather("Mumbai");
+            String greeting="";
+            if(weatherResponse!=null){
+            greeting=",Weather feels like"+weatherResponse.getCurrent().getFeelslike();
+            }
+        }
+            return new ResponseEntity<>("Hi"+authentication.getName() + greeting, HttpStatus.OK);
         }
 
       }
