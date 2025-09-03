@@ -1,0 +1,22 @@
+# Journal App
+
+A simple Journal Application built with **Spring Boot** and **MySQL**, allowing users to create, view, update, and delete journal entries. The app provides an easy-to-use interface to manage personal notes and reflections.
+
+## Features
+- Add new journal entries with a title, content, and date.
+- View all journal entries in a list.
+- Update or delete existing entries.
+- Search entries by title or date (if implemented).
+- Simple and user-friendly interface with Thymeleaf templates.
+
+## Tech Stack
+- **Backend:** Java, Spring Boot
+- **Frontend:** Thymeleaf
+- **Database:** MySQL
+- **Build Tool:** Maven
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/journal-app.git
